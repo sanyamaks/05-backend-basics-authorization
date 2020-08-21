@@ -1,0 +1,35 @@
+{
+  "name": "backend-basics",
+  "version": "0.0.1",
+  "description": "05. Основы бэкенда. Яндекс.Практикум.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "eslint ./",
+    "lint-fix": "eslint --fix ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanyamaks/05-backend-basics.git"
+  },
+  "author": "Aleksandr Maksimov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanyamaks/05-backend-basics/issues"
+  },
+  "homepage": "https://sanyamaks.github.io/05-backend-basics",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.27",
+    "validator": "^13.1.1"
+  }
+}
