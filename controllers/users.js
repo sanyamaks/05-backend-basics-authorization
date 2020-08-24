@@ -11,15 +11,7 @@ module.exports.getUser = (req, res) => {
 
   UserModel.findById(id).orFail()
     .then((user) => res.send({ data: user }))
-    .catch(() => res.status(404).send({ message: 'Нет пользователя с таким id' }));
-};
-
-module.exports.createUser = (req, res) => {
-  const { name, about, avatar } = req.body;
-
-  UserModel.create({ name, about, avatar })
-    .then((user) => res.send({ data: user }))
-    .catch(() => res.status(400).send({ message: 'Bad Request' }));
+    .catch(() => { res.status(404).send({ message: 'Нет пользователя с таким id' }); });
 };
 
 module.exports.updateUser = (req, res) => {
@@ -31,7 +23,7 @@ module.exports.updateUser = (req, res) => {
     upsert: false,
   }).orFail()
     .then((user) => res.send({ data: user }))
-    .catch(() => res.status(400).send({ message: 'Bad Request'}));
+    .catch(() => { res.status(400).send({ message: 'Bad Request' }); });
 };
 
 module.exports.updateUserAvatar = (req, res) => {
@@ -43,5 +35,5 @@ module.exports.updateUserAvatar = (req, res) => {
     upsert: false,
   }).orFail()
     .then((user) => res.send({ data: user }))
-    .catch(() => res.status(400).send({ message: 'Bad Request' }));
+    .catch(() => { res.status(400).send({ message: 'Bad Request' }); });
 };

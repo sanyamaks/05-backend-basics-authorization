@@ -22,6 +22,23 @@ module.exports.createCard = (req, res) => {
     .catch(() => req.status(400).send({ message: 'Bad Request' }));
 };
 
+module.exports.removeCard = (req, res) => {
+  const { cardId } = req.params;
+
+  CardModel.findById(cardId).populate(['owner', 'likes']).orFail()
+    .then((probableCard) => {
+      if (probableCard.owner._id.toString() !== req.user._id) {
+        return res.status(400).send({ message: 'Карточку может удалить только создатель' });
+      }
+      return CardModel.findByIdAndRemove(cardId)
+        .populate(['owner', 'likes']).orFail()
+        .then((card) => {
+          res.send({ data: card });
+        });
+    })
+    .catch(() => res.status(404).send({ message: 'Нет карточки с таким id' }));
+};
+
 module.exports.addLike = (req, res) => {
   CardModel.findByIdAndUpdate(
     req.params.cardId,
