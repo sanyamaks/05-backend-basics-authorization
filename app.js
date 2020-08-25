@@ -9,7 +9,7 @@ const createUser = require('./controllers/createUser.js');
 const auth = require('./middlewares/auth.js');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const { PORT } = process.env;
+const { PORT = 3000 } = process.env;
 const app = express();
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {

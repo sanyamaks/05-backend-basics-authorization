@@ -4,7 +4,7 @@ const validator = require('validator');
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Это обязательное поле'],
   },
   link: {
     type: String,
@@ -12,14 +12,15 @@ const cardSchema = new mongoose.Schema({
       validator(link) {
         return validator.isURL(link);
       },
+      message: 'Поле не валидно',
     },
-    required: true,
+    required: [true, 'Это обязательное поле'],
 
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
-    required: true,
+    required: [true, 'Это обязательное поле'],
 
   },
   likes: {
