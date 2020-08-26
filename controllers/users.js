@@ -11,7 +11,15 @@ module.exports.getUser = (req, res) => {
 
   UserModel.findById(id).orFail()
     .then((user) => res.send({ data: user }))
-    .catch(() => { res.status(404).send({ message: 'Нет пользователя с таким id' }); });
+    .catch((err) => {
+      if (err.name === 'DocumentNotFoundError') {
+        return res.status(404).send({ message: 'Нет пользователя с таким id' });
+      }
+      if (err.name === 'CastError') {
+        return res.status(400).send({ message: 'Невалидный id' });
+      }
+      return res.status(500).send({ message: 'Internal Server Error' });
+    });
 };
 
 module.exports.updateUser = (req, res) => {
@@ -23,7 +31,12 @@ module.exports.updateUser = (req, res) => {
     upsert: false,
   }).orFail()
     .then((user) => res.send({ data: user }))
-    .catch(() => { res.status(400).send({ message: 'Bad Request' }); });
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: `${err.message}` });
+      }
+      return res.status(500).send({ message: 'Internal Server Error' });
+    });
 };
 
 module.exports.updateUserAvatar = (req, res) => {
@@ -35,5 +48,10 @@ module.exports.updateUserAvatar = (req, res) => {
     upsert: false,
   }).orFail()
     .then((user) => res.send({ data: user }))
-    .catch(() => { res.status(400).send({ message: 'Bad Request' }); });
+    .catch((err) => {
+      if (err.name === 'ValidationError') {
+        return res.status(400).send({ message: `${err.message}` });
+      }
+      return res.status(500).send({ message: 'Internal Server Error' });
+    });
 };

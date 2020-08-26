@@ -44,7 +44,7 @@ module.exports.removeCard = (req, res) => {
         return res.status(403).send({ message: 'Карточку может удалить только создатель' });
       }
       return CardModel.findByIdAndRemove(cardId)
-        .populate(['owner', 'likes']).orFail()
+        .orFail()
         .then((card) => {
           res.send({ data: card });
         });
